@@ -1,0 +1,6 @@
+#ifndef WALLARM_TREE_CONFIG_H
+#define WALLARM_TREE_CONFIG_H
+
+#cmakedefine HAVE_SYS_TREE_H
+
+#endif /* WALLARM_TREE_CONFIG_H */
