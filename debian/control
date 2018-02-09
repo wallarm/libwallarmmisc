@@ -1,0 +1,14 @@
+Source: libwallarmmisc
+Maintainer: Wallarm Support Team <support@wallarm.com>
+Section: libs
+Priority: optional
+Build-Depends: debhelper (>= 8), cmake, libcunit1-dev
+Standards-Version: 3.9.4
+
+Package: libwallarmmisc-dev
+Section: libdevel
+Architecture: amd64
+Depends: libwallarmmisc (= ${binary:Version}), ${misc:Depends}
+Description: A header-only red-black tree algorithm C library.
+ The library extends FreeBSD's sys/tree.h by adding convenient macroses and
+ algorithms.
