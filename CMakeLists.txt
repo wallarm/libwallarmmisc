@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.8 FATAL_ERROR)
 cmake_policy (VERSION 2.8)
 
-project (libwallarmtree C)
+project (libwallarmmisc C)
 
 set (CMAKE_C_FLAGS "-Wall -std=gnu99 -O3 -g ${CMAKE_C_FLAGS}")
 
@@ -17,7 +17,7 @@ set (HEADERS_DIR include/wallarm)
 set (CONFIG_HEADERS_DIR ${PROJECT_BINARY_DIR}/include/wallarm)
 
 configure_file(
-  "${HEADERS_DIR}/tree_config.h.in" "${CONFIG_HEADERS_DIR}/tree_config.h"
+  "${HEADERS_DIR}/config.h.in" "${CONFIG_HEADERS_DIR}/config.h"
   ESCAPE_QUOTES)
 
 install(DIRECTORY ${HEADERS_DIR} ${CONFIG_HEADERS_DIR}

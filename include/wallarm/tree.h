@@ -1,7 +1,7 @@
 #ifndef WALLARM_TREE_H
 #define WALLARM_TREE_H
 
-#include <wallarm/tree_config.h>
+#include <wallarm/config.h>
 #ifdef HAVE_SYS_TREE_H
 #include <sys/tree.h>
 #else
