@@ -14,6 +14,7 @@ BuildPackage(
         'centos7'
     ],
     repos: [
-        wallarm: [ dev: true ]
+        wallarm: [ dev: true ],
+        'wallarm-node': []
     ]
 )
