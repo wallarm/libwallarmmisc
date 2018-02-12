@@ -1,3 +1,9 @@
+libwallarmmisc (0.1.1) unstable; urgency=low
+
+  * Removed broken dependency.
+
+ -- Alexey Remizov <ar@wallarm.com>  Mon, 12 Feb 2018 13:48:34 +0300
+
 libwallarmmisc (0.1.0) unstable; urgency=low
 
   * Initial release.
