@@ -1,4 +1,5 @@
 #include <wallarm/tree.h>
+#include <wallarm/bsearch.h>
 #include <CUnit/Basic.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -132,12 +133,90 @@ s_cunit_run_tests(int test_arg, int argc, char **argv)
     return (EXIT_SUCCESS);
 }
 
+static void
+test_bsearch(void)
+{
+#define IARR(...) \
+    .arr = (int []){__VA_ARGS__}, \
+    .len = sizeof((int []){__VA_ARGS__}) / sizeof(int)
+
+    struct {
+        int *arr;
+        unsigned len;
+        int key;
+        unsigned res;
+        bool found;
+    } tests[] = {
+        {IARR(), .key = 5},
+        {IARR(5), .key = 4},
+        {IARR(5), .key = 5, .found = true},
+        {IARR(5), .key = 6, .res = 1},
+        {IARR(5, 7), .key = 4},
+        {IARR(5, 7), .key = 5, .found = true},
+        {IARR(5, 7), .key = 6, .res = 1},
+        {IARR(5, 7), .key = 7, .found = true, .res = 1},
+        {IARR(5, 7), .key = 8, .res = 2},
+        {IARR(5, 7, 9), .key = 4},
+        {IARR(5, 7, 9), .key = 5, .found = true},
+        {IARR(5, 7, 9), .key = 6, .res = 1},
+        {IARR(5, 7, 9), .key = 7, .found = true, .res = 1},
+        {IARR(5, 7, 9), .key = 8, .res = 2},
+        {IARR(5, 7, 9), .key = 9, .found = true, .res = 2},
+        {IARR(5, 7, 9), .key = 10, .res = 3},
+        {IARR(5, 7, 9, 11), .key = 4},
+        {IARR(5, 7, 9, 11), .key = 5, .found = true},
+        {IARR(5, 7, 9, 11), .key = 6, .res = 1},
+        {IARR(5, 7, 9, 11), .key = 7, .found = true, .res = 1},
+        {IARR(5, 7, 9, 11), .key = 8, .res = 2},
+        {IARR(5, 7, 9, 11), .key = 9, .found = true, .res = 2},
+        {IARR(5, 7, 9, 11), .key = 10, .res = 3},
+        {IARR(5, 7, 9, 11), .key = 11, .found = true, .res = 3},
+        {IARR(5, 7, 9, 11), .key = 12, .res = 4},
+        {IARR(5, 7, 9, 11, 13), .key = 4},
+        {IARR(5, 7, 9, 11, 13), .key = 5, .found = true},
+        {IARR(5, 7, 9, 11, 13), .key = 6, .res = 1},
+        {IARR(5, 7, 9, 11, 13), .key = 7, .found = true, .res = 1},
+        {IARR(5, 7, 9, 11, 13), .key = 8, .res = 2},
+        {IARR(5, 7, 9, 11, 13), .key = 9, .found = true, .res = 2},
+        {IARR(5, 7, 9, 11, 13), .key = 10, .res = 3},
+        {IARR(5, 7, 9, 11, 13), .key = 11, .found = true, .res = 3},
+        {IARR(5, 7, 9, 11, 13), .key = 12, .res = 4},
+        {IARR(5, 7, 9, 11, 13), .key = 13, .found = true, .res = 4},
+        {IARR(5, 7, 9, 11, 13), .key = 14, .res = 5},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 4},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 5, .found = true},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 6, .res = 1},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 7, .found = true, .res = 1},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 8, .res = 2},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 9, .found = true, .res = 2},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 10, .res = 3},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 11, .found = true, .res = 3},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 12, .res = 4},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 13, .found = true, .res = 4},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 14, .res = 5},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 15, .found = true, .res = 5},
+        {IARR(5, 7, 9, 11, 13, 15), .key = 16, .res = 6},
+    };
+#undef IARR
+
+    for (unsigned i = 0; i != sizeof(tests) / sizeof(tests[0]); i++) {
+        bool found;
+        unsigned res;
+
+        found = WALLARM_BSEARCH(
+            &res, tests[i].arr, tests[i].len, *wbsearch_elm - tests[i].key);
+        CU_ASSERT_EQUAL(found, tests[i].found);
+        CU_ASSERT_EQUAL(res, tests[i].res);
+    }
+}
+
 int
 main(int argc, char **argv)
 {
     CU_pRunSummary sum;
     CU_TestInfo all_array[] = {
         {"rbtree", test_rbtree},
+        {"bsearch", test_bsearch},
         CU_TEST_INFO_NULL
     };
     CU_SuiteInfo suites[] = {
