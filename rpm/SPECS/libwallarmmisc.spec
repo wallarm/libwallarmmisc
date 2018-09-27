@@ -1,5 +1,5 @@
 Name: libwallarmmisc-devel
-Version: 0.1.1
+Version: 0.2.0
 Release: 1
 Summary: A header-only red-black tree algorithm C library
 
@@ -37,6 +37,8 @@ install -m 644 include/wallarm/sys/*.h $RPM_BUILD_ROOT%{_includedir}/wallarm/sys
 %{_includedir}/
 
 %changelog
+* Thu Sep 27 2018 Alexey Temnikov <atemnikov@wallarm.com> 0.2.0-1
+- added bsearch (Closes: NODE-1279)
 * Mon Feb 12 2018 Alexey Remizov <ar@wallarm.com> 0.1.1-1
 - Fixed dependencies.
 * Fri Feb 9 2018 Alexey Remizov <ar@wallarm.com> 0.1.0-1
