@@ -1,6 +1,6 @@
 find_package(CUnit REQUIRED)
 
-set (TEST_TARGET "tree_test")
+set (TEST_TARGET "test_all")
 
 set (SOURCES
   test.c

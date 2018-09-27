@@ -1,3 +1,9 @@
+libwallarmmisc (0.2.0) stable; urgency=medium
+
+  * added bsearch (Closes: NODE-1279)
+
+ -- Alexey Temnikov <atemnikov@wallarm.com>  Thu, 27 Sep 2018 16:27:27 +0300
+
 libwallarmmisc (0.1.1) unstable; urgency=low
 
   * Removed broken dependency.
