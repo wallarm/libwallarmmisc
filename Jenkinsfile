@@ -10,6 +10,7 @@ BuildPackage(
         'stretch',
         'trusty',
         'xenial',
+        'bionic',
         'centos6',
         'centos7'
     ],
