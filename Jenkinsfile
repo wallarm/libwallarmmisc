@@ -5,11 +5,11 @@ BuildPackage(
         original: 'all'
     ],
     dists: [
-        'wheezy',
         'jessie',
         'stretch',
         'trusty',
         'xenial',
+        'bionic',
         'centos6',
         'centos7'
     ],
