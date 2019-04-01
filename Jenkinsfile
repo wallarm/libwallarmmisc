@@ -5,7 +5,6 @@ BuildPackage(
         original: 'all'
     ],
     dists: [
-        'wheezy',
         'jessie',
         'stretch',
         'trusty',
