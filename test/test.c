@@ -1,5 +1,6 @@
 #include <wallarm/tree.h>
 #include <wallarm/bsearch.h>
+#include <wallarm/wordmask.h>
 #include <CUnit/Basic.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -210,6 +211,47 @@ test_bsearch(void)
     }
 }
 
+static void
+test_uint64_foreach(void)
+{
+    struct {
+        uint64_t input;
+        uint64_t output;
+        unsigned break_pos;
+    } tests[] = {
+        {.input = 0x0, .output = 0x0, .break_pos = -1},
+        {.input = 0x1, .output = 0x1, .break_pos = -1},
+        {.input = 0xff0f0f0f, .output = 0xff0f0f0f, .break_pos = -1},
+        {.input =  0xff0f0f0f0f0f0f0fULL,
+         .output = 0xff0f0f0f0f0f0f0fULL, .break_pos = -1},
+        {.input =  0xff0f0f0f0f0f0f0fULL,
+         .output = 0x1, .break_pos = 0},
+        {.input =  0xff0f0f0f0f0f0f0fULL,
+         .output = 0x3, .break_pos = 1},
+        {.input =  0xff0f0f0f0f0f0f0fULL,
+         .output = 0x7f0f0f0f0f0f0f0fULL, .break_pos = 62},
+        {.input =  0xff0f0f0f0f0f0f0fULL,
+         .output = 0xff0f0f0f0f0f0f0fULL, .break_pos = 63},
+        {.input = 0x80000000ULL, .output = 0x80000000ULL, .break_pos = -1},
+    };
+
+    for (unsigned i = 0; i < sizeof(tests) / sizeof(tests[0]); i++) {
+        uint64_t rv = 0;
+        unsigned pos;
+        unsigned break_pos = -1;
+
+        W_UINT64_FOREACH(pos, tests[i].input) {
+            rv |= ((uint64_t)0x1) << pos;
+            if (pos == tests[i].break_pos) {
+                break_pos = pos;
+                break;
+            }
+        }
+        CU_ASSERT_EQUAL(break_pos, tests[i].break_pos);
+        CU_ASSERT_EQUAL(rv, tests[i].output);
+    }
+}
+
 int
 main(int argc, char **argv)
 {
@@ -217,6 +259,7 @@ main(int argc, char **argv)
     CU_TestInfo all_array[] = {
         {"rbtree", test_rbtree},
         {"bsearch", test_bsearch},
+        {"uint64_foreach", test_uint64_foreach},
         CU_TEST_INFO_NULL
     };
     CU_SuiteInfo suites[] = {

@@ -1,3 +1,9 @@
+libwallarmmisc (0.3.0) stable; urgency=medium
+
+  * Updated: Utils and wordmask macroses added (Closes: NODE-1564)
+
+ -- Nikolai Miroshnichenko <nmiroshnichenkoi@wallarm.com>  Mon, 01 Apr 2019 08:33:42 +0000
+
 libwallarmmisc (0.2.0) stable; urgency=medium
 
   * added bsearch (Closes: NODE-1279)
