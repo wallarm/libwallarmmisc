@@ -1,8 +1,11 @@
 #ifndef WALLARM_UTILS_H
 #define WALLARM_UTILS_H
 
+#define W_BUILD_BUG_ON_(cond) (sizeof(struct{int:-!!(cond);}))
+#define W_BUILD_BUG_ON(cond) ((void)W_BUILD_BUG_ON_(cond))
+
 #ifndef BUILD_BUG_ON
-#define BUILD_BUG_ON(cond) ((void)(sizeof(struct{int:-!!(cond);})))
+#define BUILD_BUG_ON(cond) W_BUILD_BUG_ON(cond)
 #endif
 
 #define W_SAME_TYPE(a, b) __builtin_types_compatible_p(typeof(a), typeof(b))
