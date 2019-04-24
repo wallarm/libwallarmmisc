@@ -10,9 +10,10 @@
 
 #define W_SAME_TYPE(a, b) __builtin_types_compatible_p(typeof(a), typeof(b))
 
-#define W_MUST_BE_ARRAY(a) BUILD_BUG_ON(W_SAME_TYPE(a, &(*(a))))
+#define W_MUST_BE_ARRAY_(a) W_BUILD_BUG_ON_(W_SAME_TYPE(a, &(*(a))))
+#define W_MUST_BE_ARRAY(a) ((void)W_MUST_BE_ARRAY_(a))
 
-#define W_ARRAY_SIZE(a) (W_MUST_BE_ARRAY(a), (sizeof(a) / sizeof(*(a))))
+#define W_ARRAY_SIZE(a) ((sizeof(a) / sizeof(*(a))) + W_MUST_BE_ARRAY_(a) * 0)
 
 #define W_SINGLE_ARG(...) __VA_ARGS__
 
