@@ -1,3 +1,9 @@
+libwallarmmisc (0.4.0) stable; urgency=medium
+
+  * Updated: Macroses improvement added (Closes: NODE-1648)
+
+ -- Nikolai Miroshnichenko <nmiroshnichenko@wallarm.com>  Thu, 25 Apr 2019 08:42:06 +0000
+
 libwallarmmisc (0.3.0) stable; urgency=medium
 
   * Updated: Utils and wordmask macroses added (Closes: NODE-1564)
