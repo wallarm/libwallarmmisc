@@ -1,3 +1,9 @@
+libwallarmmisc (0.5.0) stable; urgency=medium
+
+  * Updated: W_CEIL_P2 macros added (Closes: NODE-1766)
+
+ -- Oleg Trifonov <otrifonov@wallarm.com>  Wed, 22 May 2019 13:09:48 +0000
+
 libwallarmmisc (0.4.0) stable; urgency=medium
 
   * Updated: Macroses improvement added (Closes: NODE-1648)
