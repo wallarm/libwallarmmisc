@@ -35,4 +35,20 @@
         rv;                                                     \
     })
 
+#define W_CEIL_P2(value)                                                \
+    ({                                                                  \
+        typeof(value) wcp2_val_ = (value);                              \
+        typeof(value) wcp2_rc_;                                         \
+        unsigned wcp2_clz_ = W_BUILDIN_RVINT(clz, wcp2_val_);           \
+        unsigned int wcp2_maxb_ = sizeof(wcp2_val_) * 8 - 1;            \
+        typeof(value) wcp2_mask_max_ = ((typeof(value))0x1) << wcp2_maxb_; \
+        typeof(value) wcp2_mask_ = wcp2_mask_max_ >> wcp2_clz_;         \
+                                                                        \
+        if (!!(wcp2_val_ & ~wcp2_mask_))                                \
+            wcp2_rc_ = wcp2_mask_ << 1;                                 \
+        else                                                            \
+            wcp2_rc_ = wcp2_val_;                                       \
+        wcp2_rc_;                                                       \
+    })
+
 #endif /* WALLARM_UTILS_H */
