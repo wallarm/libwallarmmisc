@@ -13,8 +13,8 @@ BuildPackage(
         'centos6',
         'centos7'
     ],
-    repos: [
-        wallarm: [ dev: true ],
-        'wallarm-node': []
+    target_repos: [
+        //wallarm: [ dev: true ],
+        'wallarm-node': [ release: '2.13' ]
     ]
 )
