@@ -7,6 +7,7 @@ BuildPackage(
     dists: [
         'jessie',
         'stretch',
+        'buster',
         'trusty',
         'xenial',
         'bionic',
