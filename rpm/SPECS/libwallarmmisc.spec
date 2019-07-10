@@ -1,6 +1,6 @@
 Name: libwallarmmisc-devel
 Version: 0.5.0
-Release: 1
+Release: 2
 Summary: A header-only red-black tree algorithm C library
 
 License: BSD
@@ -37,6 +37,9 @@ install -m 644 include/wallarm/sys/*.h $RPM_BUILD_ROOT%{_includedir}/wallarm/sys
 %{_includedir}/
 
 %changelog
+* Wed Jul 10 2019 Oleg Trifonov <otrifonov@wallarm.com> - 0.5.0-2
+- NODE-1948: Internal rebuild
+
 * Wed May 22 2019 Oleg Trifonov <otrifonov@wallarm.com> - 0.5.0-1
 - Updated: W_CEIL_P2 macros added (Closes: NODE-1766)
 * Thu Apr 25 2019 Nikolai Miroshnichenko <nmiroshnichenko@wallarm.com> - 0.4.0-1
