@@ -1,6 +1,6 @@
 Name: libwallarmmisc-devel
 Version: 0.5.0
-Release: 2
+Release: 3
 Summary: A header-only red-black tree algorithm C library
 
 License: BSD
@@ -37,6 +37,9 @@ install -m 644 include/wallarm/sys/*.h $RPM_BUILD_ROOT%{_includedir}/wallarm/sys
 %{_includedir}/
 
 %changelog
+* Fri Jul 26 2019 Dmitry Murzin <dmurzin@wallarm.com> - 0.5.0-3
+- Added: build for debian buster (Closes: NODE-1977)
+
 * Wed Jul 10 2019 Oleg Trifonov <otrifonov@wallarm.com> - 0.5.0-2
 - NODE-1948: Internal rebuild
 
