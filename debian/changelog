@@ -1,3 +1,9 @@
+libwallarmmisc (0.5.0-4) stable; urgency=medium
+
+  * Bump version
+
+ -- Dmitry Murzin <dmurzin@wallarm.com>  Thu, 21 Nov 2019 19:39:45 +0300
+
 libwallarmmisc (0.5.0-3) stable; urgency=medium
 
   * Added: build for debian buster (Closes: NODE-1977)

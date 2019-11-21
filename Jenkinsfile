@@ -14,11 +14,13 @@ BuildPackage(
         'centos6',
         'centos7'
     ],
-    repos: [
-        'wallarm': [
-		dev: true
-	],
+    target_repos: [
         'wallarm-node': [
+		release: '2.14',
+		dev: true
 	]
+    ],
+    notify: [
+        email: 'node-dev@wallarm.com'
     ]
 )
