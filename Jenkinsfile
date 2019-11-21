@@ -16,8 +16,11 @@ BuildPackage(
     ],
     target_repos: [
         'wallarm-node': [
-		release: '2.13',
+		release: '2.15',
 		dev: true
 	]
+    ],
+    notify: [
+        email: 'node-dev@wallarm.com'
     ]
 )
