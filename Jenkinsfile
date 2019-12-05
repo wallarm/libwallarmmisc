@@ -12,7 +12,8 @@ BuildPackage(
         'xenial',
         'bionic',
         'centos6',
-        'centos7'
+        'centos7',
+        'centos8'
     ],
     target_repos: [
         'wallarm-node': [
