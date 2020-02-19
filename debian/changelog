@@ -1,3 +1,9 @@
+libwallarmmisc (0.6.0) stable; urgency=medium
+
+  * tree/rb: Added search by ordered set (Closes: NODE-2867)
+
+ -- Alexander Drozdov <adrozdov@wallarm.com>  Wed, 19 Feb 2020 08:13:53 +0300
+
 libwallarmmisc (0.5.0-5) stable; urgency=medium
   * Rebuilt for CentOS 8 (NODE-1790)
  -- Dmitry Murzin <dmurzin@wallarm.com>  Thu, 05 Dec 2019 23:13:33 +0300

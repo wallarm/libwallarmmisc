@@ -101,6 +101,131 @@ test_rbtree(void)
         free(e);
 }
 
+static void
+test_rbtree_find_next(void)
+{
+#define TRBTREE_FN_ARR(...) \
+    .entries = (struct rbtree_next_entry []){__VA_ARGS__}, \
+    .n_entries = sizeof((struct rbtree_next_entry []){__VA_ARGS__}) / sizeof(struct rbtree_next_entry)
+
+    int inserts[] =
+        {10, 5, 8, 15, -5, 2, 7, 11, 12, 13, 14, 16};
+    struct rbtree_next_entry {
+        int key;
+        int found;
+    };
+    struct {
+        struct rbtree_next_entry *entries;
+        size_t n_entries;
+    } tests[] = {
+        {TRBTREE_FN_ARR({.key = 20})},
+        {TRBTREE_FN_ARR({.key = -10})},
+        {TRBTREE_FN_ARR({.key = 0})},
+        {TRBTREE_FN_ARR(
+            {.key = 0},
+            {.key = 1},
+            {.key = 9},
+            {.key = 18},
+        )},
+        {TRBTREE_FN_ARR(
+            {.key = 9},
+            {.key = 13, .found = 1},
+            {.key = 16, .found = 1},
+        )},
+        {TRBTREE_FN_ARR(
+            {.key = 9},
+            {.key = 13, .found = 1},
+            {.key = 17},
+        )},
+        {TRBTREE_FN_ARR(
+            {.key = 2, .found = 1},
+            {.key = 4},
+            {.key = 9},
+            {.key = 17},
+        )},
+        {TRBTREE_FN_ARR(
+            {.key = 2, .found = 1},
+            {.key = 2, .found = 1},
+            {.key = 4},
+            {.key = 9},
+            {.key = 17},
+        )},
+        {TRBTREE_FN_ARR(
+            {.key = 0},
+            {.key = 4},
+            {.key = 9},
+            {.key = 15, .found = 1},
+            {.key = 17},
+        )},
+        {TRBTREE_FN_ARR(
+            {.key = -10},
+            {.key = -9},
+            {.key = -5, .found = 1},
+            {.key = -4},
+            {.key = -3},
+            {.key = 0},
+            {.key = 2, .found = 1},
+            {.key = 3},
+            {.key = 4},
+            {.key = 5, .found = 1},
+            {.key = 6},
+            {.key = 7, .found = 1},
+            {.key = 8, .found = 1},
+            {.key = 9},
+            {.key = 10, .found = 1},
+            {.key = 11, .found = 1},
+            {.key = 12, .found = 1},
+            {.key = 13, .found = 1},
+            {.key = 14, .found = 1},
+            {.key = 15, .found = 1},
+            {.key = 16, .found = 1},
+            {.key = 17},
+            {.key = 18},
+        )},
+    };
+    struct test_tree tree = RB_INITIALIZER(tree);
+    struct test_tree_entry *e, *e2;
+
+    for (unsigned i = 0; i != sizeof(inserts) / sizeof(inserts[0]); i++) {
+        CU_ASSERT_FATAL((e = malloc(sizeof(*e))) != NULL);
+        e->key = inserts[i];
+        e->value = inserts[i] + 10;
+        CU_ASSERT_FATAL(RB_INSERT(test_tree, &tree, e) == NULL);
+    }
+
+    for (unsigned i = 0; i != sizeof(tests) / sizeof(tests[0]); i++) {
+        typeof(tests[0]) *test = &tests[i];
+        if (test->n_entries == 0)
+            continue;
+        bool estate_was_zero = false;
+        struct test_tree_entry *estate;
+
+        for (unsigned ai = 0; ai < test->n_entries; ai++) {
+            struct rbtree_next_entry *ne = &test->entries[ai];
+
+            if (ai == 0)
+                e = WRB_FIND_FIRST(test_tree, &tree, &estate, ne->key);
+            else
+                e = WRB_FIND_NEXT(test_tree, &estate, ne->key);
+
+            if (estate == NULL)
+                estate_was_zero = true;
+
+            if (ne->found) {
+                CU_ASSERT_FATAL(e != NULL);
+                CU_ASSERT_FATAL(e->key == ne->key);
+                CU_ASSERT_FATAL(estate_was_zero == false);
+            } else {
+                CU_ASSERT_FATAL(e == NULL);
+                if (estate != NULL)
+                    CU_ASSERT_FATAL(estate->key > ne->key);
+            }
+        }
+    }
+    WRB_FOREACH_PDFS(e, test_tree, &tree, e2)
+        free(e);
+}
+
 static int
 s_cunit_run_tests(int test_arg, int argc, char **argv)
 {
@@ -258,6 +383,7 @@ main(int argc, char **argv)
     CU_pRunSummary sum;
     CU_TestInfo all_array[] = {
         {"rbtree", test_rbtree},
+        {"rbtree_find_next", test_rbtree_find_next},
         {"bsearch", test_bsearch},
         {"uint64_foreach", test_uint64_foreach},
         CU_TEST_INFO_NULL
