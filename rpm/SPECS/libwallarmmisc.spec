@@ -1,6 +1,6 @@
 Name: libwallarmmisc-devel
-Version: 0.5.0
-Release: 5
+Version: 0.6.0
+Release: 1
 Summary: A header-only red-black tree algorithm C library
 
 License: BSD
@@ -37,6 +37,9 @@ install -m 644 include/wallarm/sys/*.h $RPM_BUILD_ROOT%{_includedir}/wallarm/sys
 %{_includedir}/
 
 %changelog
+* Wed Feb 19 2020 Alexander Drozdov <adrozdov@wallarm.com> - 0.6.0-1
+- tree/rb: Added search by ordered set (Closes: NODE-2867)
+
 * Thu Dec 05 2019 Dmitry Murzin <dmurzin@wallarm.com> - 0.5.0-5
 - Rebuilt for CentOS 8 (NODE-1790)
 
